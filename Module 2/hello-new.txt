@@ -1,0 +1,82 @@
+Node.js fs.createReadStream() Method
+Last Updated : 14 Apr, 2025
+The fs.createReadStream() method in Node.js is used to create a readable stream to read data from a file. This method is part of the fs (file system) module and is ideal for reading large files, as it reads the file in chunks rather than loading the entire file into memory.
+
+Syntax
+fs.createReadStream( path, options )
+Parameters: This method accepts two parameters, as mentioned above and described below:
+
+path: This parameter specifies the path to the file that you want to read. It can be a string, buffer, or URL.
+options (optional): This parameter can be a string or an object. Some options you can specify are:
+encoding: Specifies the character encoding (e.g., 'utf8', 'ascii'). Default is null (which returns data as a buffer).
+flag: A string that specifies the file system flags (e.g., 'r' for read).
+start: The starting byte position for reading the file (useful for reading a portion of the file).
+end: The byte position at which to stop reading.
+highWaterMark: The number of bytes to read in each chunk (buffer size).
+Return Value: This method returns the fs.ReadStream object.
+
+The fs.createReadStream() method is used to read files in chunks, improving performance in Node.js.
+
+Features
+Efficient Memory Usage: Streams are memory-efficient because they don’t load the entire file into memory. This is particularly useful for large files.
+Event-Driven: Streams are event-driven, meaning you can listen for and react to various events like data, end, error, etc.
+Pipeable: Streams can be piped into other writable streams, enabling powerful chaining of operations, such as reading from a file and immediately writing to another file or a network connection.
+Below examples illustrate the createReadStream() method in Node.js:
+
+Example 1: This example uses the fs.createReadStream() method to read and display the contents of a file (input.txt) in chunks to the console.
+
+
+// Filename - index.js
+
+// Node.js program to demonstrate the 
+// fs.createReadStream() method
+ 
+// Include fs module
+let fs = require('fs'),
+
+// Use fs.createReadStream() method
+// to read the file
+reader = fs.createReadStream('input.txt');
+
+// Read and display the file data on console
+reader.on('data', function (chunk) {
+    console.log(chunk.toString());
+});
+Output (assuming input.txt contains "GeeksforGeeks: A computer science portal for geeks"):
+
+input.txt file data:
+GeeksforGeeks: A computer science portal for geeks
+Example 2:  This example demonstrates the use of fs.createReadStream() to read a specific portion of a file (input.txt) with custom options like encoding, byte range, and buffer size, and then displays the read data in chunks on the console.
+
+
+// Filename - index.js
+
+// Node.js program to demonstrate the 
+// fs.createReadStream() method
+ 
+// Include fs module
+let fs = require('fs'),
+
+// Use fs.createReadStream() method
+// to read the file
+reader = fs.createReadStream('input.txt', {
+    flag: 'a+',
+    encoding: 'UTF-8',
+    start: 5,
+    end: 64,
+    highWaterMark: 16
+});
+
+// Read and display the file data on console
+reader.on('data', function (chunk) {
+    console.log(chunk);
+});
+Output: 
+
+forGeeks: A comp
+uter science por
+tal for geeks
+In this example, we read from byte position 5 to 64 and print the data in chunks of 16 bytes.
+
+Conclusion
+The fs.createReadStream() method is a powerful tool for handling file input in a memory-efficient and scalable way. Whether you're dealing with large files or just need to stream data efficiently, fs.createReadStream() provides the necessary functionality to handle such tasks seamlessly in Node.js.
