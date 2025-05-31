@@ -1,18 +1,9 @@
 const http = require('http');
+const path = require('path');
+const fs = require("fs");
+const { title } = require('process');
 
-const todos = [
-  {
-    id: 1,
-    title: "Learn JavaScript",
-    completed: false,
-  },
-  {
-    id: 2,
-    title: "Build a simple todo app",
-    completed: false,
-  },
-];
-
+const filePath = path.join(__dirname, 'to-do.json');
 const server = http.createServer((req, res)=> {
     console.log(req.url, req.method);
     if(req.url == "/" && req.method == "GET"){
@@ -21,20 +12,26 @@ const server = http.createServer((req, res)=> {
         })
     }
     else if(req.url == "/todos" && req.method == "GET"){
-        // status code, header set korar way 1:
-        res.writeHead(200, {
-            "content-type": "application/json",
-            "email": 'ph@gmail.com'
-        })
-
-        // status code, header set korar way 2: aivabe akta akta kore set korte hobe
-        // res.setHeader("content-type", "text/plain");
-        // res.setHeader("email", 'ph2@gmail.com');
-        // res.statusCode = 201;
-
-        res.end(JSON.stringify(todos))
+        res.writeHead(200, {"content-type": "application/json"})
+        const data = fs.readFileSync(filePath, {encoding: 'utf-8'});
+        console.log(data)
+        res.end(data)
     }else if(req.url == "/create-todo" && req.method == "POST"){
-        res.end("Your to-do is created")
+        let data = "";
+        req.on("data", (chunk)=>{
+            data = data + chunk;
+        });
+
+        req.on("end", ()=> {
+            console.log(data)
+            const {id, title, completed} = JSON.parse(data);
+            const allTodos = fs.readFileSync(filePath, {encoding: 'utf-8'});
+            const parseAllTodos = JSON.parse(allTodos);
+            parseAllTodos.push({id, title, completed});
+            fs.writeFileSync(filePath, JSON.stringify(parseAllTodos), {encoding: 'utf-8'});
+            
+            res.end(JSON.stringify({id, title, completed}))
+        })
     }else{
         res.end("Rout not found")
     }

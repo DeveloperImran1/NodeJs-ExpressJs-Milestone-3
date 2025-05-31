@@ -1,0 +1,6 @@
+[
+  { "id": 1, "title": "Learn JavaScript", "completed": false },
+  { "id": 2, "title": "Build a simple todo app", "completed": false },
+  { "id": 3, "title": "Learn NextJs", "completed": true },
+  { "id": 4, "title": "Learn todo", "completed": true }
+]
