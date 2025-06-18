@@ -2,7 +2,7 @@ import app from "./app";
 import { client } from "./config/mongodb";
 
 let server;
-const port = 5000;
+const port = 27017;
 
 const bootstrap = async () => {
   await client.connect();

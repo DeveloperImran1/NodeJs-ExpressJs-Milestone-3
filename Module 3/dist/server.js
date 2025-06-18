@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const mongodb_1 = require("./config/mongodb");
 let server;
-const port = 5000;
+const port = 27017;
 const bootstrap = () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongodb_1.client.connect();
     console.log("DB succesfully connected.");
