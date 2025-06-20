@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export interface INote {
   title: string;
   content: string;
@@ -7,4 +9,5 @@ export interface INote {
     label: string;
     color: string;
   };
+  user: Types.ObjectId; // aikhane user er value hobe user collection er _id ta refference hisabe bosbe. Tai type airokom.
 }

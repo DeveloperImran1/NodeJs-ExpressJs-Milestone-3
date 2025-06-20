@@ -1,3 +1,11 @@
+import { Model } from "mongoose";
+
+export interface IAddress {
+  city: string;
+  zip: number;
+  street: string;
+}
+
 export interface IUser {
   firstName: string;
   lastName: string;
@@ -5,4 +13,13 @@ export interface IUser {
   age: number;
   password: string;
   role: "USER" | "ADMIN" | "SUPERADMIN";
+  address: IAddress;
+}
+
+export interface UserInstanceMethods {
+  hashPassword(password: string): string;
+}
+
+export interface UserStaticMethods extends Model<IUser> {
+  hashPassword(password: string): string;
 }

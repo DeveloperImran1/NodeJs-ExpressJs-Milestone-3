@@ -15,7 +15,7 @@ notesRoute.post("/create-note", async (req, res) => {
 });
 
 notesRoute.get("/", async (req, res) => {
-  const notes = await Note.find();
+  const notes = await Note.find().populate("user"); // aikhane populate er kaj holo note er moddhe user namer jei property ase, tar jei objectId ase, sei objectId dia user collection a oi user ke find kore nia asbe. and user property er moddhe oi full user er value ke set korbe.
 
   res.status(200).json({
     success: true,
